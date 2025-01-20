@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  tasks: [],
+  tasks: [
+    { id: 1, name: 'Learn Redux Toolkit' },
+    { id: 2, name: 'Build a Task Management App' },
+  ],
 };
 
 const taskSlice = createSlice({
