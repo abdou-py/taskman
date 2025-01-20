@@ -15,6 +15,10 @@ db.sqlite3
 *.log
 *.pkl
 *.pth
+#py environment files
+Lib/
+Scripts/
+pyvenv.cfg
 
 # Node.js Next.js
 node_modules/
