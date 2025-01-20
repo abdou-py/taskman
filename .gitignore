@@ -1,0 +1,72 @@
+# Python FastAPI
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+.DS_Store
+env/
+venv/
+ENV/
+env.bak/
+*.sqlite3
+db.sqlite3
+*.log
+*.pkl
+*.pth
+
+# Node.js Next.js
+node_modules/
+.next/
+out/
+.cache/
+build/
+coverage/
+dist/
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp/
+.pnp.js
+.yarn/
+.yarn-integrity
+.yarnrc.yml
+
+# General
+.DS_Store
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+*.bak
+
+# IDEs and editors
+.vscode/
+.idea/
+*.iml
+*.sublime*
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Environment variables and sensitive files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Package manager specific
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
