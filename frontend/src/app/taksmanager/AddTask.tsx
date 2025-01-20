@@ -1,13 +1,18 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addTask } from '../store/taskSlice';
+import { AddTask } from '../store/taskSlice'; // Assuming correct import path
 import TaskForm from '../components/TaskForm';
 
-const AddTask = () => {
+interface Task {
+  id: number;
+  name: string;
+}
+
+const AddTask: React.FC = () => {
   const dispatch = useDispatch();
 
-  const handleAddTask = (taskName) => {
-    const newTask = {
+  const handleAddTask = (taskName: string) => {
+    const newTask: Task = {
       id: Date.now(),
       name: taskName,
     };
