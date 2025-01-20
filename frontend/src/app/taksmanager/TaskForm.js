@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 
-const TaskForm = ({ onSubmit }) => {
-  const [taskName, setTaskName] = useState('');
+const TaskForm = ({ onSubmit, initialValue = '' }) => {
+  const [taskName, setTaskName] = useState(initialValue);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (taskName.trim()) {
       onSubmit(taskName);
-      setTaskName('');
     }
   };
 
@@ -20,7 +19,7 @@ const TaskForm = ({ onSubmit }) => {
         value={taskName}
         onChange={(e) => setTaskName(e.target.value)}
       />
-      <button type="submit">Add Task</button>
+      <button type="submit">Save Task</button>
     </form>
   );
 };
