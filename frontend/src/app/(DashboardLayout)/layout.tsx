@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import Header from "@/app/(DashboardLayout)/layout/header/Header";
 import Sidebar from "@/app/(DashboardLayout)/layout/sidebar/Sidebar";
 
+import { Provider } from "react-redux"; 
+import store from "@/app/store"; 
+
 const MainWrapper = styled("div")(() => ({
   display: "flex",
   minHeight: "100vh",
@@ -32,6 +35,7 @@ export default function RootLayout({
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   return (
+    <Provider store={store}> 
     <MainWrapper className="mainwrapper">
       {/* ------------------------------------------- */}
       {/* Sidebar */}
@@ -69,5 +73,7 @@ export default function RootLayout({
         </Container>
       </PageWrapper>
     </MainWrapper>
+    </Provider>
+
   );
 }
