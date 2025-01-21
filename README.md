@@ -1,223 +1,85 @@
+## Task Management App with Next.js, Redux, and FastAPI
 
-# <a href="https://spike-nextjs-free.netlify.app/">Spike NextJS Free</a>
-Spike NextJS Admin Dashboard
+This document details the development of a task management web application using Next.js, Redux, and FastAPI. The provided template ([https://www.wrappixel.com/templates/spike-next-js-free-admin-template/](https://www.wrappixel.com/templates/spike-next-js-free-admin-template/)) will be used for the front-end design.
 
-<!-- Main image of Template -->
-<a target="_blank" href="https://www.wrappixel.com/templates/spike-next-js-free-admin-template/">
-  <img src="https://www.wrappixel.com/wp-content/uploads/2023/11/spike-nextjs-free.jpg" />
-</a>
+### Project Requirements
 
+**Front-End (Next.js & Redux):**
 
-# Compare with Premium Version 🌓
+* **Pages:**
+    * Task List:
+        * View existing tasks.
+        * Add new tasks.
+        * Edit existing tasks.
+        * Delete tasks.
+        * Multi-select and delete tasks.
+    * Dashboard:
+        * Display total number of tasks.
+        * Display number of modified tasks.
+        * Display number of deleted tasks.
+* **Template:** Spike Next.js Free Admin Template ([https://www.wrappixel.com/templates/spike-next-js-free-admin-template/](https://www.wrappixel.com/templates/spike-next-js-free-admin-template/))
 
-<table>
-<thead>
-<tr>
-<th>Spike NextJS Free Version</th>
-<th>Spike NextJS Pro Version</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>
-    <a href="https://spike-nextjs-free.netlify.app/">Live Preview</a>
-  </td>
-  <td>
-  <a href="https://spike-nextjs-pro-main.vercel.app/">Live Preview</a>
-  </td>
-</tr>
-<tr>
-  <td>
-    <a href="https://www.wrappixel.com/templates/spike-next-js-free-admin-template/">Download Now</a>
-  </td>
-  <td>
-    <a href="https://www.wrappixel.com/templates/spike-nextjs-admin-template/?ref=33">Purchase Now</a>
-  </td>
-</tr>
-<tr>
-  <td>
-  1 Basic Dashboard
-  </td>
-  <td>
-  2+ Stunning Dashboards
-  </td>
-</tr>
-<tr>
-  <td>
-  -
-  </td>
-  <td>
-  Dashboard Figma Files
-  </td>
-</tr>
-<tr>
-  <td>
-  Material Ui
-  </td>
-  <td>
-  Material Ui
-  </td>
-</tr>
-<tr>
-  <td>
-  Fully Responsive Pages
-  </td>
-  <td>
-  Fully Responsive Pages
-  </td>
-</tr>
-<tr>
-  <td>
-  7+ Pages Template
-  </td>
-  <td>
-  65+ Page Templates
-  </td>
-</tr>
-<tr>
-  <td>
-  5+ UI Components
-  </td>
-  <td>
-  45+ UI Components
-  </td>
-</tr>
-<tr>
-  <td>
-  No Documentation
-  </td>
-  <td>
-  Documentation Provided
-  </td>
-</tr>
-<tr>
-  <td>
-  Tabler Icons
-  </td>
-  <td>
-  Tabler Icons
-  </td>
-</tr>
-<tr>
-  <td>
-  Easy To Customize
-  </td>
-  <td>
-  Easy To Customize
-  </td>
-</tr>
-<tr>
-  <td>
-  -
-  </td>
-  <td>
-  Right-to-Left(RTL) Verion
-  </td>
-</tr>
-<tr>
-  <td>
-  -
-  </td>
-  <td>
-  15+ Integrated Plugins
-  </td>
-</tr>
-<tr>
-  <td>
-  -
-  </td>
-  <td>
-  12+ Ready to Use App
-  </td>
-</tr>
-<tr>
-  <td>
-  -
-  </td>
-  <td>
-  1 Year Premium Support
-  </td>
-</tr>
-</tbody>
-</table>
+**Back-End (FastAPI & SQLAlchemy):**
 
+* **Database:** MySQL
+* **Database Management:** Aerich for migrations
+* **Project Structure:** Models, Services, Routes, DB
+* **No Raw SQL:** Use SQLAlchemy for database interactions
 
+**General Best Practices:**
 
-# Upgrade to Premium version
+* Version control with a GitHub repository.
+* Clear and informative commit messages.
+* Function documentation for code clarity.
 
-<a target="_blank" href="https://www.wrappixel.com/templates/spike-nextjs-admin-template/?ref=33">
-  <img src="https://www.wrappixel.com/wp-content/uploads/edd/2024/05/spike-nextjs-admin-wpn.jpg" alt="">
-</a>
-<p>
-  Checkout our premium version of Spike NextJs Dashboard Template for lots more features and ready to use page templates.<br>
-  <a href="https://spike-nextjs-pro-main.vercel.app/">Check Live Preview</a> | <a href="https://www.wrappixel.com/templates/spike-nextjs-admin-template/?ref=33">Download</a>
-</p>
+### Deliverables
 
-<!-- Versions of Template -->
-# Versions
-<table>
-<thead>
-<tr>
-<th>Next Js</th>
-<th>Angular</th>
-<th>Vue</th>
-<th>Nuxt Js</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-  <a href="https://www.wrappixel.com/templates/spike-nextjs-admin-template/?ref=33" width="150px">
-    <img src="https://www.wrappixel.com/wp-content/uploads/edd/2024/05/spike-nextjs-admin-wpn.jpg" alt="" style="max-width:150px;">
-  </a>
-</td>
-<td>
-  <a href="https://www.wrappixel.com/templates/spike-angular-admin-template/" rel="nofollow" width="150px">
-    <img src="https://www.wrappixel.com/wp-content/uploads/edd/2024/05/spike-angular-admin-wpn.jpg" alt="" style="max-width:150px;">
-  </a>
-</td>
-<td>
-  <a href="https://www.wrappixel.com/templates/spike-vuejs-admin-dashboard/" rel="nofollow" width="150px">
-    <img src="https://www.wrappixel.com/wp-content/uploads/edd/2024/05/spike-vuejs-vuetify-admin-wpn.jpg" alt="" style="max-width:150px;">
-  </a>
-</td>
-<td>
-  <a href="https://www.wrappixel.com/templates/spike-nuxtjs-admin-template/" rel="nofollow" width="150px">
-    <img src="https://www.wrappixel.com/wp-content/uploads/edd/2024/05/spike-nuxtjs-admin-wpn.jpg" alt="" style="max-width:150px;">
-  </a>
-</td>
-</td>
-  
-</tr>
-</tbody>
-</table>
+* GitHub repository link containing the project source code.
+* Local execution instructions, including dependency installation and commands.
+* A README.md file with:
+    * Project description
+    * Implemented functionalities
+    * Configuration and execution steps
 
+### Evaluation Criteria
 
+* Adherence to technical and functional specifications.
+* Code quality: readability, modularity, organization.
+* Clear and concise documentation.
+* Proper Git practices (clear and meaningful commits).
+* User-friendly and functional design.
 
+**Note:** This project description is tailored to the recruitment task details you provided in Arabic and French.
 
+Here's a breakdown of how we can approach this project:
 
-<!-- Useful Links of Template -->
-# Useful Links
-- <p><a href="https://www.wrappixel.com/">Admin Theme</a> from Wrappixel</p>
-- <p><a href="https://www.wrappixel.com/templates/materialpro/">Bootstrap Themes</a> from Wrappixel</p>
-- <p><a href="https://www.wrappixel.com/templates/materialpro-lite/">Free Bootstrap Admin Templates</a> from Wrappixel</p>
-- <p><a href="https://www.wrappixel.com/templates/materialpro-react-redux-admin/">React Bootstrap Template</a> from Wrappixel</p>
-- <p><a href="https://www.wrappixel.com/templates/materialpro-vuetify-admin/">Vuejs Templates</a> from Wrappixel</p>
+1. **Front-End Development (Next.js & Redux):**
+   - Set up a Next.js project using the provided template.
+   - Design the Task List and Dashboard pages using the template components.
+   - Implement task management functionalities using Redux for state management.
+   - Create components for adding, editing, deleting, and displaying tasks.
+   - Integrate multi-select functionality for deleting multiple tasks.
+   - Develop the Dashboard to display task counts using Redux state.
 
+2. **Back-End Development (FastAPI & SQLAlchemy):**
+   - Set up a FastAPI project.
+   - Define data models for tasks using SQLAlchemy.
+   - Create database tables using Aerich for migrations.
+   - Implement API endpoints for CRUD (Create, Read, Update, Delete) operations on tasks.
+   - Ensure all database interactions use SQLAlchemy, not raw SQL.
 
-<!-- Licensing of Template -->
-# Licensing
-- <p>Copyright 2024 Wrappixel <a href="https://www.wrappixel.com/">https://wrappixel.com/</a></p>
-- <p>Licensed under MIT <a href="https://www.wrappixel.com/license/">https://wrappixel.com/license/</a></p>
+3. **Deployment and Documentation:**
+   - Push the code to a GitHub repository.
+   - Create a README.md file with detailed instructions for:
+      - Installing dependencies
+      - Running the application locally
+      - Configuring the database connection (if applicable)
+   - Document the code using comments and docstrings for better understanding.
 
+**Additional Notes:**
 
-<!-- Social Media of Adminmart -->
-# Social Media 👭🏼
-- <p>Facebook: <a href="https://www.facebook.com/wrappixel">https://www.facebook.com/wrappixel</a></p>
-- <p>Linkedin: <a href="https://www.linkedin.com/company/wrappixel/">https://www.linkedin.com/company/wrappixel/</a></p>
-- <p>Github: <a href="https://github.com/wrappixel">https://github.com/wrappixel</a></p>
-- <p>Twitter: <a href="https://twitter.com/wrappixel">https://twitter.com/wrappixel</a></p>
-- <p>Medium: <a href="https://medium.com/wrappixel">https://medium.com/wrappixel</a></p>
-- <p>Discord: <a href="https://discord.com/invite/eMzE8F6Wqs">https://discord.com/invite/eMzE8F6Wqs</a></p>
-- <p>Youtube: <a href="https://www.youtube.com/channel/UCdFDlrhIchtxF8EmxejUPGQ">https://www.youtube.com/channel/UCdFDlrhIchtxF8EmxejUPGQ</a></p>
+* This is a high-level overview. Specific implementation details will depend on your chosen libraries and frameworks.
+* Consider using a UI library like Material-UI for a consistent and user-friendly interface.
+* Explore authentication and authorization mechanisms if you want to secure user data.
 
+By following these steps and adhering to the best practices mentioned, you can develop a functional and well-structured task management application.
