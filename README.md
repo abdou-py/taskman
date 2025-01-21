@@ -73,8 +73,62 @@ Here's a breakdown of how we can approach this project:
    - Create a README.md file with detailed instructions for:
       - Installing dependencies
       - Running the application locally
-      - Configuring the database connection (if applicable)
+      - Configuring the database connection 
    - Document the code using comments and docstrings for better understanding.
+
+## Running the Task Management Application
+
+This document provides instructions on how to run the task management application locally.
+
+**Prerequisites:**
+
+* **Node.js and npm (or yarn):** Make sure you have Node.js and npm (or yarn) installed on your system. You can download and install them from the official Node.js website: https://nodejs.org/
+
+**Steps:**
+
+1. **Clone the repository:**
+   - Clone the repository from GitHub using the following command:
+     ```bash
+     git clone <repository_url>
+     ```
+   - Replace `<repository_url>` with the actual URL of the repository.
+
+2. **Navigate to the project directory:**
+   - Open your terminal or command prompt and navigate to the project directory:
+     ```bash
+     cd <project_directory>
+     ```
+   - Replace `<project_directory>` with the actual path to the directory.
+
+3. **Install dependencies:**
+   - Install the required dependencies using npm or yarn:
+     ```bash
+     npm install
+     ```
+     or
+     ```bash
+     yarn install
+     ```
+
+4. **Start the development server:**
+   - Start the development server using the following command:
+     ```bash
+     npm run dev
+     ```
+     or
+     ```bash
+     yarn dev
+     ```
+
+5. **Access the application:**
+   - Open your web browser and navigate to `http://localhost:3000` to access the application.
+
+**Additional Notes:**
+
+* This assumes that the project is configured to run on port 3000. If the port is different, please adjust the URL accordingly.
+* If you encounter any issues, please refer to the project's README file or the documentation for more information.
+
+**Congratulations!** You have successfully run the task management application locally.
 
 **Additional Notes:**
 
@@ -83,3 +137,4 @@ Here's a breakdown of how we can approach this project:
 * Explore authentication and authorization mechanisms if you want to secure user data.
 
 By following these steps and adhering to the best practices mentioned, you can develop a functional and well-structured task management application.
+
