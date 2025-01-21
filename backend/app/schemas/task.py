@@ -1,4 +1,3 @@
-# backend/app/schemas/task.py
 from pydantic import BaseModel
 
 class TaskBase(BaseModel):
@@ -10,7 +9,7 @@ class TaskCreate(TaskBase):
     pass
 
 class Task(TaskBase):
-    id: int
+    idtask: int
 
     class Config:
         orm_mode = True

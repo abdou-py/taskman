@@ -1,7 +1,9 @@
-# backend/app/crud/task.py
+from sqlalchemy import select
 from sqlalchemy.orm import Session
+
 from app.models.task import Task
 from app.schemas.task import TaskCreate, Task
+
 
 # Dependency
 def get_db():
@@ -11,11 +13,14 @@ def get_db():
     finally:
         db.close()
 
+
 def get_task(db: Session, task_id: int):
-    return db.query(Task).filter(Task.id == task_id).first()
+    return db.execute(select(Task).filter(Task.id == task_id)).first()
+
 
 def get_tasks(db: Session, skip: int = 0, limit: int = 10):
-    return db.query(Task).offset(skip).limit(limit).all()
+    return db.execute(select(Task).offset(skip).limit(limit)).all()
+
 
 def create_task(db: Session, task: TaskCreate):
     db_task = Task(**task.dict())
@@ -24,8 +29,9 @@ def create_task(db: Session, task: TaskCreate):
     db.refresh(db_task)
     return db_task
 
+
 def update_task(db: Session, task_id: int, task: TaskCreate):
-    db_task = db.query(Task).filter(Task.id == task_id).first()
+    db_task = db.execute(select(Task).filter(Task.id == task_id)).first()
     if db_task:
         db_task.title = task.title
         db_task.description = task.description
@@ -36,8 +42,9 @@ def update_task(db: Session, task_id: int, task: TaskCreate):
     else:
         return None
 
+
 def delete_task(db: Session, task_id: int):
-    db_task = db.query(Task).filter(Task.id == task_id).first()
+    db_task = db.execute(select(Task).filter(Task.id == task_id)).first()
     if db_task:
         db.delete(db_task)
         db.commit()
