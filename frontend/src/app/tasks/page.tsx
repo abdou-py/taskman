@@ -7,13 +7,14 @@ import { Typography, Grid, CardContent, Checkbox, Button, Box } from '@mui/mater
 import PageContainer from '@/app/(DashboardLayout)/components/container/PageContainer';
 import DashboardCard from '@/app/(DashboardLayout)/components/shared/DashboardCard';
 import BlankCard from '@/app/(DashboardLayout)/components/shared/BlankCard';
+import { AppDispatch, RootState } from '../store'; // Import AppDispatch and RootState
 
 import { Provider } from "react-redux"; // Import Provider
-import store from "@/app/store"; // Import the Redux store
+import { store }  from "@/app/store"; // Import the Redux store
 
 const TaskListContent: React.FC = () => {
-  const { tasks, loading, error } = useSelector((state: any) => state.tasks); // Use selector to fetch state
-  const dispatch = useDispatch(); // Dispatch actions
+  const { tasks, loading, error } = useSelector((state: RootState) => state.tasks); // Use RootState to type the state
+  const dispatch = useDispatch<AppDispatch>(); // Use AppDispatch for proper typing
   const [selectedTasks, setSelectedTasks] = useState<number[]>([]); // Track selected tasks
 
   useEffect(() => {
@@ -45,6 +46,7 @@ const TaskListContent: React.FC = () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <DashboardCard title="Task Management">
+                      <>
             <Box mb={2}>
               <Button
                 variant="contained"
@@ -71,32 +73,32 @@ const TaskListContent: React.FC = () => {
             )}
             <Grid container spacing={3}>
               {tasks.map((task) => (
-  <Grid item xs={12} sm={6} md={4} key={task.idtask }> 
-    <BlankCard>
-      <CardContent>
-        <Box display="flex" alignItems="center">
-          <Checkbox
-            checked={selectedTasks.includes(task.idtask )}
-            onChange={() => handleCheckboxChange(task.idtask )}
-            color="primary"
-          />
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            {task.title}
-          </Typography>
-          <Button
-            variant="outlined"
-            color="error"
-            onClick={() => handleDelete(task.idtask )}
-          >
-            Delete
-          </Button>
-        </Box>
-      </CardContent>
-    </BlankCard>
-  </Grid>
-))}
+                <Grid item xs={12} sm={6} md={4} key={task.idtask}>
+                  <BlankCard>
+                    <CardContent>
+                      <Box display="flex" alignItems="center">
+                        <Checkbox
+                          checked={selectedTasks.includes(task.idtask)}
+                          onChange={() => handleCheckboxChange(task.idtask)}
+                          color="primary"
+                        />
+                        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                          {task.name}
+                        </Typography>
+                        <Button
+                          variant="outlined"
+                          color="error"
+                          onClick={() => handleDelete(task.idtask)}
+                        >
+                          Delete
+                        </Button>
+                      </Box>            
 
-            </Grid>
+                    </CardContent>
+                  </BlankCard>
+                </Grid>
+              ))}
+            </Grid></>
           </DashboardCard>
         </Grid>
       </Grid>

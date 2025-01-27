@@ -1,14 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { RootState } from '../store'; 
 
 interface Task {
-  id: number;
+  idtask: number;
   name: string;
   completed: boolean;
 }
 
 const TaskStats: React.FC = () => {
-  const tasks = useSelector((state) => state.tasks) as Task[];
+    // Use RootState to type the state parameter
+  const tasks = useSelector((state: RootState) => state.tasks.tasks); // Access tasks.tasks
 
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter((task) => task.completed).length;

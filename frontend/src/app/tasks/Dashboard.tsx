@@ -1,5 +1,5 @@
 import React from 'react';
-import TaskStats from '../components/TaskStats';
+import TaskStats from './TaskStats';
 
 const Dashboard: React.FC = () => {
   return (

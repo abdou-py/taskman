@@ -5,7 +5,7 @@ import Header from "@/app/(DashboardLayout)/layout/header/Header";
 import Sidebar from "@/app/(DashboardLayout)/layout/sidebar/Sidebar";
 
 import { Provider } from "react-redux"; 
-import store from "@/app/store"; 
+import { store } from "@/app/store";
 
 const MainWrapper = styled("div")(() => ({
   display: "flex",

@@ -2,29 +2,31 @@ import React, { useState } from 'react';
 
 interface TaskFormProps {
   onSubmit: (taskName: string) => void;
-  initialValue?: string;
+  initialValue?: string; // Optional initialValue prop
+  disabled?: boolean; // Add disabled prop
 }
 
-const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialValue = '' }) => {
-  const [taskName, setTaskName] = useState(initialValue);
+const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialValue = '', disabled = false }) => {
+  const [taskName, setTaskName] = useState(initialValue); // Use initialValue to set the initial state
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (taskName.trim()) {
-      onSubmit(taskName);
-    }
+    onSubmit(taskName);
+    setTaskName(''); // Clear the input after submission
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="taskName">Task Name:</label>
       <input
         type="text"
-        id="taskName"
         value={taskName}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTaskName(e.target.value)}
+        onChange={(e) => setTaskName(e.target.value)}
+        placeholder="Enter task name"
+        disabled={disabled} // Disable input when loading
       />
-      <button type="submit">Save Task</button>
+      <button type="submit" disabled={disabled}> {/* Disable button when loading */}
+        Add Task
+      </button>
     </form>
   );
 };
