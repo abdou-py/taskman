@@ -15,7 +15,6 @@ const Menuitems = [
     navlabel: true,
     subheader: "Home",
   },
-
   {
     id: uniqueId(),
     title: "Dashboard",
@@ -24,19 +23,19 @@ const Menuitems = [
   },
   {
     navlabel: true,
-    subheader: "Utilities",
+    subheader: "Task Manager",
   },
   {
     id: uniqueId(),
-    title: "Typography",
+    title: "Tasks",
     icon: IconTypography,
-    href: "/utilities/typography",
+    href: "/tasks",
   },
   {
     id: uniqueId(),
-    title: "Shadow",
+    title: "New Task",
     icon: IconCopy,
-    href: "/utilities/shadow",
+    href: "/tasks/add",
   },
   {
     navlabel: true,
@@ -53,22 +52,6 @@ const Menuitems = [
     title: "Register",
     icon: IconUserPlus,
     href: "/authentication/register",
-  },
-  {
-    navlabel: true,
-    subheader: "Extra",
-  },
-  {
-    id: uniqueId(),
-    title: "Icons",
-    icon: IconMoodHappy,
-    href: "/icons",
-  },
-  {
-    id: uniqueId(),
-    title: "Sample Page",
-    icon: IconAperture,
-    href: "/sample-page",
   },
 ];
 

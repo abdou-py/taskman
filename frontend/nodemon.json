@@ -1,0 +1,6 @@
+{
+  "watch": ["."],
+  "ext": "js,jsx,ts,tsx",
+  "ignore": ["node_modules"],
+  "exec": "next build && next start"
+}

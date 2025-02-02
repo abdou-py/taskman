@@ -7,7 +7,7 @@ import { RootState, AppDispatch } from '../store'; // Import RootState and AppDi
 
 interface Task {
   idtask: number;
-  name: string;
+  title: string;
 }
 
 const EditTask: React.FC = () => {
@@ -19,7 +19,7 @@ const EditTask: React.FC = () => {
   const tasks = useSelector((state: RootState) => state.tasks.tasks); // Access tasks.tasks
   const task = tasks.find((t) => t.idtask === Number(idtask));
 
-  const [taskName, setTaskName] = useState(task?.name || '');
+  const [taskName, setTaskName] = useState(task?.title || '');
 
   useEffect(() => {
     if (!task) {
@@ -32,7 +32,7 @@ const EditTask: React.FC = () => {
       dispatch(
         updateTask({
           idtask: task.idtask,
-          updates: { name: updatedTaskName },
+          updates: { title: updatedTaskName },
         })
       );
       navigate('/'); // Redirect after updating

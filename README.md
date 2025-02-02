@@ -114,7 +114,7 @@ This document provides instructions on how to run the task management applicatio
    - Start the development server using the following command:
      ```bash
      npm run dev
-     ```
+     
      or
      ```bash
      yarn dev

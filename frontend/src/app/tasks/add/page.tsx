@@ -1,12 +1,16 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTask } from '../store/taskSlice';
-import TaskForm from './TaskForm';
-import { AppDispatch } from '../store'; // Import AppDispatch from your store
+import { addTask } from '../../store/taskSlice';
+import TaskForm from '../TaskForm';
+import { AppDispatch } from '../../store'; // Import AppDispatch from your store
 
 interface Task {
   id: number;
-  name: string;
+  title: string;
+  description: string;
+  is_completed: boolean;
 }
 
 const AddTask: React.FC = () => {
@@ -26,7 +30,9 @@ const AddTask: React.FC = () => {
     try {
       const newTask: Task = {
         id: Date.now(), // Temporary ID (will be replaced by the backend)
-        name: taskName,
+        title: taskName,
+        description: '',
+        is_completed : false
       };
 
       // Dispatch the addTask action and unwrap the result

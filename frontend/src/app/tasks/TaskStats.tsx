@@ -4,8 +4,8 @@ import { RootState } from '../store';
 
 interface Task {
   idtask: number;
-  name: string;
-  completed: boolean;
+  title: string;
+  is_completed: boolean;
 }
 
 const TaskStats: React.FC = () => {
@@ -13,7 +13,7 @@ const TaskStats: React.FC = () => {
   const tasks = useSelector((state: RootState) => state.tasks.tasks); // Access tasks.tasks
 
   const totalTasks = tasks.length;
-  const completedTasks = tasks.filter((task) => task.completed).length;
+  const completedTasks = tasks.filter((task) => task.is_completed).length;
 
   return (
     <div>

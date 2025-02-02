@@ -1,146 +1,199 @@
-import { createSlice, createAsyncThunk, configureStore } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// Define the Task interface
+const api = axios.create({
+  baseURL: 'http://localhost:8000',
+});
+
 interface Task {
   idtask: number;
-  name: string;
-  completed?: boolean;
+  title: string;
+  description: string;
+  is_completed: boolean;
+  created_at?: string;
 }
 
-// Define the TaskState interface
 interface TaskState {
   tasks: Task[];
   loading: boolean;
   error: string | null;
+  currentPage: number;
+  totalTasks: number;
+  hasMore: boolean;
+  pageSize: number;
+  searchQuery: string;
+  statusFilter: boolean | null;
+  sortField: string;
+  sortOrder: 'asc' | 'desc';
 }
 
-// Initial state for the task slice
 const initialState: TaskState = {
   tasks: [],
   loading: false,
   error: null,
+  currentPage: 0,
+  totalTasks: 0,
+  hasMore: true,
+  pageSize: 10,
+  searchQuery: '',
+  statusFilter: null,
+  sortField: 'idtask',
+  sortOrder: 'asc',
 };
 
-// Fetch all tasks
-export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-  try {
-    const response = await axios.get('http://localhost:8000/tasks');
-    return response.data;
-  } catch (error) {
-    throw new Error('Failed to fetch tasks');
+export const fetchTasks = createAsyncThunk<
+  { tasks: Task[]; total: number },
+  void,
+  { rejectValue: string; state: { tasks: TaskState } }
+>(
+  'tasks/fetchTasks',
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const { tasks } = getState();
+      const response = await api.get('/tasks', {
+        params: {
+          skip: tasks.currentPage * tasks.pageSize,
+          limit: tasks.pageSize,
+          search: tasks.searchQuery,
+          status: tasks.statusFilter,
+          sort_field: tasks.sortField,
+          sort_order: tasks.sortOrder
+        }
+      });
+      return { tasks: response.data.tasks, total: response.data.total };
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to fetch tasks');
+    }
   }
-});
+);
 
-// Add a new task
-export const addTask = createAsyncThunk('tasks/addTask', async (task: Omit<Task, 'idtask'>) => {
-  try {
-    const response = await axios.post('http://localhost:8000/tasks', task);
-    return response.data;
-  } catch (error) {
-    throw new Error('Failed to add task');
+export const addTask = createAsyncThunk<Task, Omit<Task, 'idtask'>, { rejectValue: string }>(
+  'tasks/addTask',
+  async (task, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/tasks', task);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to add task');
+    }
   }
-});
+);
 
-// Remove a task
-export const removeTask = createAsyncThunk('tasks/removeTask', async (idtask: number) => {
-  try {
-    await axios.delete(`http://localhost:8000/tasks/${idtask}`);
-    return idtask;
-  } catch (error) {
-    throw new Error('Failed to remove task');
+export const removeTask = createAsyncThunk<number, number, { rejectValue: string }>(
+  'tasks/removeTask',
+  async (idtask, { rejectWithValue }) => {
+    try {
+      await api.delete(`/tasks/${idtask}`);
+      return idtask;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to remove task');
+    }
   }
-});
+);
 
-// Update a task
-export const updateTask = createAsyncThunk('tasks/updateTask', async (payload: { idtask: number; updates: Partial<Task> }) => {
-  try {
-    const { idtask, updates } = payload;
-    const response = await axios.patch(`http://localhost:8000/tasks/${idtask}`, updates);
-    return response.data;
-  } catch (error) {
-    throw new Error('Failed to update task');
+export const updateTask = createAsyncThunk<Task, { idtask: number; updates: Partial<Task> }, { rejectValue: string }>(
+  'tasks/updateTask',
+  async ({ idtask, updates }, { rejectWithValue }) => {
+    try {
+      const response = await api.patch(`/tasks/${idtask}`, updates);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to update task');
+    }
   }
-});
+);
 
-// Create the task slice
 const taskSlice = createSlice({
   name: 'tasks',
   initialState,
-  reducers: {},
+  reducers: {
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+      state.currentPage = 0;
+      state.tasks = [];
+      state.hasMore = true;
+    },
+    setStatusFilter: (state, action) => {
+      state.statusFilter = action.payload;
+      state.currentPage = 0;
+      state.tasks = [];
+      state.hasMore = true;
+    },
+    setSort: (state, action) => {
+      state.sortField = action.payload.field;
+      state.sortOrder = action.payload.order;
+      state.currentPage = 0;
+      state.tasks = [];
+      state.hasMore = true;
+    },
+    resetPagination: (state) => {
+      state.currentPage = 0;
+      state.tasks = [];
+      state.hasMore = true;
+    }
+  },
   extraReducers: (builder) => {
     builder
-      // Fetch Tasks
       .addCase(fetchTasks.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(fetchTasks.fulfilled, (state, action) => {
         state.loading = false;
-        state.tasks = action.payload;
+        state.tasks = [...state.tasks, ...action.payload.tasks];
+        state.totalTasks = action.payload.total;
+        state.hasMore = (state.currentPage + 1) * state.pageSize < action.payload.total;
+        state.currentPage += 1;
       })
       .addCase(fetchTasks.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to fetch tasks';
+        state.error = action.payload || 'Failed to fetch tasks';
       })
-
-      // Add Task
       .addCase(addTask.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(addTask.fulfilled, (state, action) => {
+      .addCase(addTask.fulfilled, (state) => {
         state.loading = false;
-        state.tasks.push(action.payload);
+        state.tasks = [];
+        state.currentPage = 0;
+        state.hasMore = true;
       })
       .addCase(addTask.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to add task';
+        state.error = action.payload || 'Failed to add task';
       })
-
-      // Remove Task
       .addCase(removeTask.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(removeTask.fulfilled, (state, action) => {
+      .addCase(removeTask.fulfilled, (state) => {
         state.loading = false;
-        state.tasks = state.tasks.filter((task) => task.idtask !== action.payload);
+        state.tasks = [];
+        state.currentPage = 0;
+        state.hasMore = true;
       })
       .addCase(removeTask.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to remove task';
+        state.error = action.payload || 'Failed to remove task';
       })
-
-      // Update Task
       .addCase(updateTask.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(updateTask.fulfilled, (state, action) => {
         state.loading = false;
-        const index = state.tasks.findIndex((task) => task.idtask === action.payload.idtask);
+        const index = state.tasks.findIndex(t => t.idtask === action.payload.idtask);
         if (index !== -1) {
           state.tasks[index] = action.payload;
         }
       })
       .addCase(updateTask.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to update task';
+        state.error = action.payload || 'Failed to update task';
       });
-  },
+  }
 });
 
-// Export the reducer
+export const { setSearchQuery, setStatusFilter, setSort, resetPagination } = taskSlice.actions;
 export default taskSlice.reducer;
-
-// Create and export the store
-export const store = configureStore({
-  reducer: {
-    tasks: taskSlice.reducer,
-  },
-});
-
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
