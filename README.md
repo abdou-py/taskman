@@ -1,140 +1,113 @@
-## Task Management App with Next.js, Redux, and FastAPI
+This project is a task management web application built using Next.js,
+Redux, and FastAPI, with a MySQL database. The front-end is based on the
+Spike Next.js Free Admin Template
+(https://www.wrappixel.com/templates/spike-next-js-free-admin-template/).
 
-This document details the development of a task management web application using Next.js, Redux, and FastAPI. The provided template ([https://www.wrappixel.com/templates/spike-next-js-free-admin-template/](https://www.wrappixel.com/templates/spike-next-js-free-admin-template/)) will be used for the front-end design.
+# Project Overview
 
-### Project Requirements
+## Front-End (Next.js & Redux)
 
-**Front-End (Next.js & Redux):**
+-   **Task List:** View, add, edit, and delete tasks.
 
-* **Pages:**
-    * Task List:
-        * View existing tasks.
-        * Add new tasks.
-        * Edit existing tasks.
-        * Delete tasks.
-        * Multi-select and delete tasks.
-    * Dashboard:
-        * Display total number of tasks.
-        * Display number of modified tasks.
-        * Display number of deleted tasks.
-* **Template:** Spike Next.js Free Admin Template ([https://www.wrappixel.com/templates/spike-next-js-free-admin-template/](https://www.wrappixel.com/templates/spike-next-js-free-admin-template/))
+-   **Multi-select and delete tasks.**
 
-**Back-End (FastAPI & SQLAlchemy):**
+-   **Dashboard:** View task statistics (total tasks, modified tasks,
+    deleted tasks).
 
-* **Database:** MySQL
-* **Database Management:** Aerich for migrations
-* **Project Structure:** Models, Services, Routes, DB
-* **No Raw SQL:** Use SQLAlchemy for database interactions
+## Back-End (FastAPI & SQLAlchemy)
 
-**General Best Practices:**
+-   **Database:** MySQL
 
-* Version control with a GitHub repository.
-* Clear and informative commit messages.
-* Function documentation for code clarity.
+-   **Database Management:** Aerich for migrations
 
-### Deliverables
+-   **No Raw SQL:** Uses SQLAlchemy for database interactions
 
-* GitHub repository link containing the project source code.
-* Local execution instructions, including dependency installation and commands.
-* A README.md file with:
-    * Project description
-    * Implemented functionalities
-    * Configuration and execution steps
+# Getting Started
 
-### Evaluation Criteria
+To run the task management app locally, follow these steps:
 
-* Adherence to technical and functional specifications.
-* Code quality: readability, modularity, organization.
-* Clear and concise documentation.
-* Proper Git practices (clear and meaningful commits).
-* User-friendly and functional design.
+## Prerequisites
 
-**Note:** This project description is tailored to the recruitment task details you provided in Arabic and French.
+-   **Node.js & npm/yarn** - Download from Node.js
+    (https://nodejs.org/).
 
-Here's a breakdown of how we can approach this project:
+-   **Python 3.8+** with pymysql, Alembic, and FastAPI. Install the
+    necessary Python dependencies:
 
-1. **Front-End Development (Next.js & Redux):**
-   - Set up a Next.js project using the provided template.
-   - Design the Task List and Dashboard pages using the template components.
-   - Implement task management functionalities using Redux for state management.
-   - Create components for adding, editing, deleting, and displaying tasks.
-   - Integrate multi-select functionality for deleting multiple tasks.
-   - Develop the Dashboard to display task counts using Redux state.
+    `pip install pymysql alembic fastapi`
 
-2. **Back-End Development (FastAPI & SQLAlchemy):**
-   - Set up a FastAPI project.
-   - Define data models for tasks using SQLAlchemy.
-   - Create database tables using Aerich for migrations.
-   - Implement API endpoints for CRUD (Create, Read, Update, Delete) operations on tasks.
-   - Ensure all database interactions use SQLAlchemy, not raw SQL.
+-   **MySQL** - Make sure MySQL is installed. Download from MySQL
+    Downloads (https://dev.mysql.com/downloads/).
 
-3. **Deployment and Documentation:**
-   - Push the code to a GitHub repository.
-   - Create a README.md file with detailed instructions for:
-      - Installing dependencies
-      - Running the application locally
-      - Configuring the database connection 
-   - Document the code using comments and docstrings for better understanding.
+## Clone the Repository
 
-## Running the Task Management Application
+Clone the repository to your local machine:
 
-This document provides instructions on how to run the task management application locally.
+    git clone <repository_url>
 
-**Prerequisites:**
+## Install Front-End Dependencies
 
-* **Node.js and npm (or yarn):** Make sure you have Node.js and npm (or yarn) installed on your system. You can download and install them from the official Node.js website: https://nodejs.org/
+In the project directory, install the required JavaScript dependencies:
 
-**Steps:**
+    cd <project_directory>
+    npm install
 
-1. **Clone the repository:**
-   - Clone the repository from GitHub using the following command:
-     ```bash
-     git clone <repository_url>
-     ```
-   - Replace `<repository_url>` with the actual URL of the repository.
+or if you use yarn
 
-2. **Navigate to the project directory:**
-   - Open your terminal or command prompt and navigate to the project directory:
-     ```bash
-     cd <project_directory>
-     ```
-   - Replace `<project_directory>` with the actual path to the directory.
+    yarn install
 
-3. **Install dependencies:**
-   - Install the required dependencies using npm or yarn:
-     ```bash
-     npm install
-     ```
-     or
-     ```bash
-     yarn install
-     ```
+## Set Up the Database
 
-4. **Start the development server:**
-   - Start the development server using the following command:
-     ```bash
-     npm run dev
-     
-     or
-     ```bash
-     yarn dev
-     ```
+### Create the Database:
 
-5. **Access the application:**
-   - Open your web browser and navigate to `http://localhost:3000` to access the application.
+Open your MySQL shell or use a GUI and run the following SQL commands to
+create the database:
 
-**Additional Notes:**
+    CREATE DATABASE my_database;
 
-* This assumes that the project is configured to run on port 3000. If the port is different, please adjust the URL accordingly.
-* If you encounter any issues, please refer to the project's README file or the documentation for more information.
+### Create a MySQL User (Optional):
 
-**Congratulations!** You have successfully run the task management application locally.
+If you don't have a database user, run the following:
 
-**Additional Notes:**
+    CREATE USER 'root'@'localhost' IDENTIFIED BY 'your_password';
+    GRANT ALL PRIVILEGES ON my_database.* TO 'root'@'localhost';
+    FLUSH PRIVILEGES;
 
-* This is a high-level overview. Specific implementation details will depend on your chosen libraries and frameworks.
-* Consider using a UI library like Material-UI for a consistent and user-friendly interface.
-* Explore authentication and authorization mechanisms if you want to secure user data.
+### Configure the Database Connection
 
-By following these steps and adhering to the best practices mentioned, you can develop a functional and well-structured task management application.
+Create a `.env` file in the root of your project and add your MySQL
+credentials:
 
+    MYSQL_HOST=localhost
+    MYSQL_USER=root
+    MYSQL_PASSWORD=your_password
+    MYSQL_DATABASE=my_database
+
+## Run Migrations
+
+### Initialize Alembic Migrations:
+
+First, generate the migration script based on the models:
+
+    alembic revision --autogenerate -m "Initial migration"
+
+### Apply Migrations:
+
+After the migration script is generated, apply it to the database:
+
+    alembic upgrade head
+
+## Run the Application
+
+### Start the Development Server:
+
+    npm run dev
+
+or
+
+    yarn dev
+
+Open your web browser and navigate to http://localhost:3000 to view the
+app.
+
+Congratulations! You've successfully set up the Task Management App.
