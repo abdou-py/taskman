@@ -119,3 +119,7 @@ afficher l'application.
 
 Félicitations ! Vous avez configuré avec succès l'application de gestion
 des tâches.
+
+![Screenshot of the task management app list view](screenshot3.png)
+![Screenshot of the task management app card view](screenshot2.png)
+![Screenshot of the task management app stats dashboard](screenshot1.png)
