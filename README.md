@@ -54,11 +54,12 @@ Clonez le dépôt sur votre machine locale :
 Dans le répertoire du projet, installez les dépendances JavaScript
 requises :
 
-    cd <project_directory>
+    cd <project_directory>/frontend
     npm install
 
 ou si vous utilisez yarn
 
+    cd <project_directory>/frontend
     yarn install
 
 ## Configurer la base de données
@@ -106,12 +107,19 @@ données :
 
 ## Exécuter l'application
 
-### Démarrer le serveur de développement :
+### Démarrer le serveur Backend :
 
+    pip install fastapi uvicorn
+    uvicorn main:app --reload
+
+### Démarrer le serveur de développement Frontend :
+
+    cd <project_directory>/frontend
     npm run dev
 
 ou
 
+    cd <project_directory>/frontend
     yarn dev
 
 Ouvrez votre navigateur Web et accédez à http://localhost:3000 pour
