@@ -27,15 +27,15 @@ const Menuitems = [
   },
   {
     id: uniqueId(),
-    title: "Tasks",
+    title: "Task Cards",
     icon: IconTypography,
     href: "/tasks",
   },
   {
     id: uniqueId(),
-    title: "New Task",
+    title: "Tasks List",
     icon: IconCopy,
-    href: "/tasks/add",
+    href: "/tasks/manage",
   },
   {
     navlabel: true,

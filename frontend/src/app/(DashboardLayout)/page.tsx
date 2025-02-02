@@ -1,14 +1,20 @@
-'use client'
-import { Grid, Box, Card, CardContent, Typography, Stack, useTheme } from '@mui/material';
+'use client';
+import { useEffect } from 'react';
+import { Grid, Box, Card, CardContent, Typography, Stack, useTheme, CircularProgress } from '@mui/material';
 import PageContainer from '@/app/(DashboardLayout)/components/container/PageContainer';
 import { CheckCircle, Assignment, PendingActions } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '@/app/store';
+import { fetchTasks } from '../store/taskSlice';
 
-// Enhanced TaskStats component
 const TaskStats = () => {
   const theme = useTheme();
-  const tasks = useSelector((state: RootState) => state.tasks.tasks);
+  const dispatch = useDispatch<AppDispatch>();
+  const { tasks, loading, error } = useSelector((state: RootState) => state.tasks);
+
+  useEffect(() => {
+    dispatch(fetchTasks()); // Fetch latest data from the database
+  }, [dispatch]);
 
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter(task => task.is_completed).length;
@@ -23,51 +29,63 @@ const TaskStats = () => {
           <Typography variant="h5">Task Statistics</Typography>
         </Stack>
 
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={4}>
-            <StatCard
-              title="Total Tasks"
-              value={totalTasks}
-              icon={<Assignment fontSize="large" />}
-              color={theme.palette.primary.main}
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <StatCard
-              title="Completed"
-              value={completedTasks}
-              icon={<CheckCircle fontSize="large" />}
-              color={theme.palette.success.main}
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <StatCard
-              title="Pending"
-              value={pendingTasks}
-              icon={<PendingActions fontSize="large" />}
-              color={theme.palette.warning.main}
-            />
-          </Grid>
-        </Grid>
-
-        <Box mt={3}>
-          <Typography variant="body1">
-            Completion Progress: {completionPercentage}%
-          </Typography>
-          <Box 
-            height={8} 
-            bgcolor={theme.palette.grey[200]} 
-            borderRadius={4}
-            mt={1}
-          >
-            <Box
-              width={`${completionPercentage}%`}
-              height={8}
-              bgcolor={theme.palette.primary.main}
-              borderRadius={4}
-            />
+        {loading ? (
+          <Box display="flex" justifyContent="center" alignItems="center" minHeight="100px">
+            <CircularProgress />
           </Box>
-        </Box>
+        ) : error ? (
+          <Typography color="error" variant="body1" role="alert">
+            {error}
+          </Typography>
+        ) : (
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={4}>
+              <StatCard
+                title="Total Tasks"
+                value={totalTasks}
+                icon={<Assignment fontSize="large" />}
+                color={theme.palette.primary.main}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <StatCard
+                title="Completed"
+                value={completedTasks}
+                icon={<CheckCircle fontSize="large" />}
+                color={theme.palette.success.main}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <StatCard
+                title="Pending"
+                value={pendingTasks}
+                icon={<PendingActions fontSize="large" />}
+                color={theme.palette.warning.main}
+              />
+            </Grid>
+          </Grid>
+        )}
+
+        {!loading && !error && (
+          <Box mt={3}>
+            <Typography variant="body1">
+              Completion Progress: {completionPercentage}%
+            </Typography>
+            <Box 
+              height={8} 
+              bgcolor={theme.palette.grey[200]} 
+              borderRadius={4}
+              mt={1}
+            >
+              <Box
+                width={`${completionPercentage}%`}
+                height={8}
+                bgcolor={theme.palette.primary.main}
+                borderRadius={4}
+              />
+            </Box>
+          </Box>
+        )}
       </CardContent>
     </Card>
   );
@@ -94,7 +112,6 @@ const Dashboard = () => {
           <Grid item xs={12} lg={12}>
             <TaskStats />
           </Grid>
-
         </Grid>
       </Box>
     </PageContainer>

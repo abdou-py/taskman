@@ -91,11 +91,19 @@ export const removeTask = createAsyncThunk<number, number, { rejectValue: string
   }
 );
 
+export const updateTaskStatus = createAsyncThunk(
+  'tasks/updateTaskStatus',
+  async ({ id, is_completed }: { id: number; is_completed: boolean }) => {
+    await api.put(`/tasks/${id}`, { is_completed }); 
+    return { id, is_completed };
+  }
+);
+
 export const updateTask = createAsyncThunk<Task, { idtask: number; updates: Partial<Task> }, { rejectValue: string }>(
   'tasks/updateTask',
   async ({ idtask, updates }, { rejectWithValue }) => {
     try {
-      const response = await api.patch(`/tasks/${idtask}`, updates);
+      const response = await api.put(`/tasks/${idtask}`, updates);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Failed to update task');

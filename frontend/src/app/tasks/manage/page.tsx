@@ -6,6 +6,7 @@ import {
   fetchTasks, 
   removeTask, 
   addTask, 
+  updateTaskStatus,
   setSearchQuery, 
   setStatusFilter, 
   setSort, 
@@ -128,16 +129,22 @@ const handleDelete = useCallback(
     setSnackbarOpen(true);
   };
 
-    const handleCheckboxChange = (id: number) => {
-    setSelectedTasks((prevSelectedTasks) => {
-      const isSelected = prevSelectedTasks.includes(id);
-      if (isSelected) {
-        return prevSelectedTasks.filter((taskId) => taskId !== id);
-      } else {
-        return [...prevSelectedTasks, id];
-      }
-    });
-  };
+const handleCheckboxChange = (id: number, currentStatus: boolean) => {
+  // Toggle completion status
+  dispatch(updateTaskStatus({ id, is_completed: !currentStatus }))
+    .unwrap()
+    .then(() => showSuccess('Task status updated'))
+    .catch(() => showError('Failed to update task status'));
+
+  // Maintain task selection for deletion
+  setSelectedTasks((prevSelectedTasks) => {
+    const isSelected = prevSelectedTasks.includes(id);
+    return isSelected
+      ? prevSelectedTasks.filter((taskId) => taskId !== id)
+      : [...prevSelectedTasks, id];
+  });
+};
+
 
 
   return (
@@ -262,7 +269,7 @@ const handleDelete = useCallback(
                           <Box display="flex" alignItems="center">
                             <Checkbox
                               checked={selectedTasks.includes(task.idtask)}
-                              onChange={() => handleCheckboxChange(task.idtask)}
+                              onChange={() => handleCheckboxChange(task.idtask, task.is_completed)}
                               icon={<UncheckedIcon />}
                               checkedIcon={<CheckCircleIcon color="primary" />}
                             />
